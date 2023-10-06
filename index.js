@@ -4,9 +4,9 @@ const app = express();
 require("dotenv").config();
 
 const PORT = process.env.PORT || 4000;
-//const TOKEN = process.env.LINE_CHANNEL_ACCESS_TOKEN;
-const TOKEN =
-  "tvb2bkJUvF5ZbSzAf9WDSmfwbwRDxI/2Nlw1TROa2XbaSAXdySiT1w4OvRQrTWPcZXSWvNn1cwlZtBkjly5fhhubxbIXzxZ5sAqnk0644k4l1ShKzP2MXJxZ50Wd1L0d1Yba6vX1JVDQYA/EBH2DbgdB04t89/1O/w1cDnyilFU=";
+const TOKEN = process.env.LINE_CHANNEL_ACCESS_TOKEN;
+// const TOKEN =
+//   "tvb2bkJUvF5ZbSzAf9WDSmfwbwRDxI/2Nlw1TROa2XbaSAXdySiT1w4OvRQrTWPcZXSWvNn1cwlZtBkjly5fhhubxbIXzxZ5sAqnk0644k4l1ShKzP2MXJxZ50Wd1L0d1Yba6vX1JVDQYA/EBH2DbgdB04t89/1O/w1cDnyilFU=";
 
 app.use(express.json());
 app.use(
