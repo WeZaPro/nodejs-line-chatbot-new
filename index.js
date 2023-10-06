@@ -16,7 +16,9 @@ app.use(
 app.post("/webhook", function (req, res) {
   res.send("HTTP POST request sent to the webhook URL!");
 
-  console.log("req.body.events===> ", req.body.events);
+  console.log("req.body.events===> ", req.body.events[0]);
+  console.log("userID ===> ", req.body.events[0].source.userId);
+  console.log("input Text ===> ", req.body.events[0].text);
 
   if (req.body.events[0].type === "message") {
     const dataString = JSON.stringify({
