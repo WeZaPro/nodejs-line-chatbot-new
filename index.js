@@ -4,9 +4,7 @@ const app = express();
 require("dotenv").config();
 
 const PORT = process.env.PORT || 4000;
-//const TOKEN = process.env.LINE_ACCESS_TOKEN;
-const TOKEN =
-  "tvb2bkJUvF5ZbSzAf9WDSmfwbwRDxI/2Nlw1TROa2XbaSAXdySiT1w4OvRQrTWPcZXSWvNn1cwlZtBkjly5fhhubxbIXzxZ5sAqnk0644k4l1ShKzP2MXJxZ50Wd1L0d1Yba6vX1JVDQYA/EBH2DbgdB04t89/1O/w1cDnyilFU=";
+const TOKEN = process.env.LINE_CHANNEL_ACCESS_TOKEN;
 
 app.use(express.json());
 app.use(
@@ -20,16 +18,11 @@ app.use(
 // });
 
 app.post("/webhook", function (req, res) {
-  console.log("res.body.event ==> ", req.body.event);
   res.send("HTTP POST request sent to the webhook URL!");
-  // If the user sends a message to your bot, send a reply message
-  //   if (req.body.events[0].type === "message") {
+
   if (req.body.events[0].type === "message") {
-    // You must stringify reply token and message data to send to the API server
     const dataString = JSON.stringify({
-      // Define reply token
       replyToken: req.body.events[0].replyToken,
-      // Define reply messages
       messages: [
         {
           type: "text",
@@ -42,13 +35,11 @@ app.post("/webhook", function (req, res) {
       ],
     });
 
-    // Request header. See Messaging API reference for specification
     const headers = {
       "Content-Type": "application/json",
       Authorization: "Bearer " + TOKEN,
     };
 
-    // Options to pass into the request, as defined in the http.request method in the Node.js documentation
     const webhookOptions = {
       hostname: "api.line.me",
       path: "/v2/bot/message/reply",
@@ -57,25 +48,16 @@ app.post("/webhook", function (req, res) {
       body: dataString,
     };
 
-    // When an HTTP POST request of message type is sent to the /webhook endpoint,
-    // we send an HTTP POST request to https://api.line.me/v2/bot/message/reply
-    // that is defined in the webhookOptions variable.
-
-    // Define our request
     const request = https.request(webhookOptions, (res) => {
       res.on("data", (d) => {
         process.stdout.write(d);
       });
     });
 
-    // Handle error
-    // request.on() is a function that is called back if an error occurs
-    // while sending a request to the API server.
     request.on("error", (err) => {
       console.error(err);
     });
 
-    // Finally send the request and the data we defined
     request.write(dataString);
     request.end();
   }
